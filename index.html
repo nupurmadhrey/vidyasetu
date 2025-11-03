@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vidyasetu — V1.3</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+  <header>
+    <div class="brand">Vidyasetu</div>
+    <nav>
+      <a href="#" class="active" data-section="home">Home</a>
+      <a href="#" data-section="about">About</a>
+      <a href="#" data-section="courses">All Exams</a>
+      <a href="#" data-section="timetable">My Timetable</a>
+      <a href="#" id="loginBtn">Login</a>
+    </nav>
+  </header>
+
+  <!-- ✅ Updated Home Section -->
+  <section id="home" class="active">
+    <div class="home-container">
+      <div class="home-image">
+        <h1>Vidyasetu</h1>
+      </div>
+      <div class="home-content">
+        <h1>Welcome to Vidyasetu</h1>
+        <p>Centralized platform for government exam dates, resources & personalized timetables.</p>
+<button id="exploreBtn" class="btn">Explore Exams</button>
+      </div>
+      
+      <!-- New Features Section -->
+      <div class="features">
+        <h2>Why Choose Vidyasetu?</h2>
+        <div class="features-grid">
+          <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3>Exam Calendar</h3>
+            <p>Never miss an important exam date with our comprehensive calendar.</p>
+          </div>
+          <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <h3>Study Resources</h3>
+            <p>Access curated study materials and previous year question papers.</p>
+          </div>
+          <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Performance Tracking</h3>
+            <p>Monitor your progress with detailed analytics and insights.</p>
+          </div>
+          <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">
+              <i class="fas fa-bell"></i>
+            </div>
+            <h3>Smart Notifications</h3>
+            <p>Get timely alerts for exam updates, deadlines, and new resources.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Stats Section -->
+      <div class="stats">
+        <h2>Our Impact</h2>
+        <div class="stats-grid">
+          <div class="stat-item animate-on-scroll">
+            <div class="stat-number" id="examCount">50+</div>
+            <div class="stat-label">Exams Covered</div>
+          </div>
+          <div class="stat-item animate-on-scroll">
+            <div class="stat-number" id="userCount">10,000+</div>
+            <div class="stat-label">Active Users</div>
+          </div>
+          <div class="stat-item animate-on-scroll">
+            <div class="stat-number" id="successCount">95%</div>
+            <div class="stat-label">Success Rate</div>
+          </div>
+          <div class="stat-item animate-on-scroll">
+            <div class="stat-number" id="resourceCount">500+</div>
+            <div class="stat-label">Study Resources</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== UPDATED ABOUT SECTION ========== -->
+  <section id="about">
+    <div class="about-container">
+      <div class="about-image animate-on-scroll">
+        <img src="https://i.pinimg.com/736x/0b/6c/b1/0b6cb1a71ca09f9eeff65bac7f4dda16.jpg" alt="Vidyasetu - Empowering Government Exam Aspirants">
+      </div>
+      <div class="about-content animate-on-scroll">
+        <h1>About Vidyasetu</h1>
+        <p>Vidyasetu is a comprehensive platform designed to empower government exam aspirants across India. We bring all government exam updates, resources, and preparation tools into one centralized platform, helping aspirants prepare with ease and efficiency.</p>
+        
+        <p>Our mission is to bridge the information gap that often hinders talented individuals from achieving their dream government jobs. With Vidyasetu, you get access to timely notifications, curated study materials, and personalized study plans.</p>
+        
+        <div class="about-highlights">
+          <div class="highlight-item animate-on-scroll">
+            <div class="highlight-icon">
+              <i class="fas fa-check"></i>
+            </div>
+            <div>
+              <strong>Comprehensive Exam Coverage</strong>
+              <p>From UPSC to state-level exams, we've got you covered</p>
+            </div>
+          </div>
+          
+          <div class="highlight-item animate-on-scroll">
+            <div class="highlight-icon">
+              <i class="fas fa-check"></i>
+            </div>
+            <div>
+              <strong>Personalized Study Plans</strong>
+              <p>Tailored timetables based on your exam and preparation level</p>
+            </div>
+          </div>
+          
+          <div class="highlight-item animate-on-scroll">
+            <div class="highlight-icon">
+              <i class="fas fa-check"></i>
+            </div>
+            <div>
+              <strong>Expert-Curated Resources</strong>
+              <p>Quality study materials prepared by subject matter experts</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="about-mission-vision">
+          <div class="mission-card animate-on-scroll">
+            <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+            <p>To democratize access to quality exam preparation resources and empower every aspirant to achieve their career goals in government services through technology-enabled learning solutions.</p>
+          </div>
+          
+          <div class="vision-card animate-on-scroll">
+            <h3><i class="fas fa-eye"></i> Our Vision</h3>
+            <p>To become India's most trusted and comprehensive platform for government exam preparation, recognized for our commitment to student success and innovation in educational technology</p>
+                      </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="courses">
+    <h1 style="text-align:center;margin-bottom:1rem;">All Exams</h1>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="selectTab('all')">All Exams</button>
+      <button class="tab-btn" onclick="selectTab('after12')">Post Intermediate</button>
+      <button class="tab-btn" onclick="selectTab('afterGrad')">Post Graduation</button>
+      <button class="tab-btn" onclick="selectTab('defence')">Defence & Armed Forces</button>
+    </div>
+
+    <div class="main">
+      <aside class="sidebar">
+        <input type="text" placeholder="Search exams..." class="search-input" oninput="filterExams()" />
+
+        <label><input type="checkbox" value="All India" onchange="filterExams()" /> All India</label><br/>
+        <label><input type="checkbox" value="State" onchange="filterExams()" /> State Level</label>
+
+        <select onchange="filterExams()" id="stateDropdown" style="width: 100%; margin-top: 1rem;">
+          <option value="">-- Select State --</option>
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="Telangana">Telangana</option>
+          <option value="Tamil Nadu">Tamil Nadu</option>
+          <option value="Uttar Pradesh">Uttar Pradesh</option>
+          <option value="Karnataka">Karnataka</option>
+        </select>
+      </aside>
+
+      <section class="content" id="examContainer">
+        <!-- Original exams + more added -->
+        <div class="exam-card" data-tags="All India after12">
+          <h4>NEET</h4>
+          <p>Medical entrance exam</p>
+          <button class="prepare-btn">I want to prepare</button>
+          <button class="learn-more-btn" onclick="openExamModal('neet')">Learn More</button>
+        </div>
+        <div class="exam-card" data-tags="State Maharashtra afterGrad">
+          <h4>MPSC</h4>
+          <p>Maharashtra Public Service Commission</p>
+          <button class="prepare-btn">I want to prepare</button>
+          <button class="learn-more-btn" onclick="openExamModal('mpsc')">Learn More</button>
+        </div>
+        <div class="exam-card" data-tags="All India afterGrad">
+          <h4>UPSC</h4>
+          <p>Civil Services Exam</p>
+          <button class="prepare-btn">I want to prepare</button>
+          <button class="learn-more-btn" onclick="openExamModal('upsc')">Learn More</button>
+        </div>
+        <div class="exam-card" data-tags="Defence All India after12">
+          <h4>NDA</h4>
+          <p>National Defence Academy</p>
+          <button class="prepare-btn">I want to prepare</button>
+          <button class="learn-more-btn" onclick="openExamModal('nda')">Learn More</button>
+        </div>
+        <div class="exam-card" data-tags="All India after12">
+          <h4>JEE</h4>
+          <p>Engineering entrance exam</p>
+          <button class="prepare-btn">I want to prepare</button>
+          <button class="learn-more-btn" onclick="openExamModal('jee')">Learn More</button>
+        </div>
+        <div class="exam-card" data-tags="State Uttar Pradesh afterGrad">
+          <h4>UPPCS</h4>
+          <p>Uttar Pradesh Public Service Commission</p>
+          <button class="prepare-btn">I want to prepare</button>
+          <button class="learn-more-btn" onclick="openExamModal('uppcs')">Learn More</button>
+        </div>
+        <div class="exam-card" data-tags="All India afterGrad">
+          <h4>SSC CGL</h4>
+          <p>Staff Selection Commission</p>
+          <button class="prepare-btn">I want to prepare</button>
+          <button class="learn-more-btn" onclick="openExamModal('ssc')">Learn More</button>
+        </div>
+        <div class="exam-card" data-tags="State Telangana afterGrad">
+          <h4>TSPSC</h4>
+          <p>Telangana State Public Service Commission</p>
+          <button class="prepare-btn">I want to prepare</button>
+          <button class="learn-more-btn" onclick="openExamModal('tspsc')">Learn More</button>
+        </div>
+        <div class="exam-card" data-tags="Defence All India afterGrad">
+          <h4>AFCAT</h4>
+          <p>Air Force Common Admission Test</p>
+          <button class="prepare-btn">I want to prepare</button>
+          <button class="learn-more-btn" onclick="openExamModal('afcat')">Learn More</button>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section id="timetable">
+    <div class="timetable-container">
+      <div class="timetable-header">
+        <h1>My Study Timetable</h1>
+        <p>Create and manage your personalized study schedule</p>
+        <div class="timetable-actions">
+          <button class="btn btn-primary" id="createSessionBtn">
+            <i class="fas fa-plus"></i> Add Study Session
+          </button>
+          <button class="btn btn-secondary" id="saveTimetableBtn">
+            <i class="fas fa-save"></i> Save Timetable
+          </button>
+          <button class="btn btn-secondary" id="resetTimetableBtn">
+            <i class="fas fa-redo"></i> Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Study Hours Summary -->
+      <div class="study-summary">
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="summary-content">
+            <h3>Total Study Hours</h3>
+            <div class="summary-value" id="totalHours">0 hrs</div>
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i class="fas fa-calendar-day"></i>
+          </div>
+          <div class="summary-content">
+            <h3>Sessions This Week</h3>
+            <div class="summary-value" id="totalSessions">0</div>
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="summary-content">
+            <h3>Subjects</h3>
+            <div class="summary-value" id="totalSubjects">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timetable Creator Form -->
+      <div class="timetable-creator">
+        <h2>Add Study Session</h2>
+        <form id="sessionForm">
+          <div class="form-group">
+            <label for="subject">Subject/Topic</label>
+            <input type="text" id="subject" class="form-control" placeholder="e.g., Mathematics, Physics, Current Affairs" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="timeRange">Time</label>
+            <div class="time-range">
+              <select id="startTime" class="form-control" required>
+                <option value="">Start Time</option>
+                <option value="6">6:00 AM</option>
+                <option value="7">7:00 AM</option>
+                <option value="8">8:00 AM</option>
+                <option value="9">9:00 AM</option>
+                <option value="10">10:00 AM</option>
+                <option value="11">11:00 AM</option>
+                <option value="12">12:00 PM</option>
+                <option value="13">1:00 PM</option>
+                <option value="14">2:00 PM</option>
+                <option value="15">3:00 PM</option>
+                <option value="16">4:00 PM</option>
+                <option value="17">5:00 PM</option>
+                <option value="18">6:00 PM</option>
+                <option value="19">7:00 PM</option>
+                <option value="20">8:00 PM</option>
+                <option value="21">9:00 PM</option>
+              </select>
+              <span>to</span>
+              <select id="endTime" class="form-control" required>
+                <option value="">End Time</option>
+                <option value="7">7:00 AM</option>
+                <option value="8">8:00 AM</option>
+                <option value="9">9:00 AM</option>
+                <option value="10">10:00 AM</option>
+                <option value="11">11:00 AM</option>
+                <option value="12">12:00 PM</option>
+                <option value="13">1:00 PM</option>
+                <option value="14">2:00 PM</option>
+                <option value="15">3:00 PM</option>
+                <option value="16">4:00 PM</option>
+                <option value="17">5:00 PM</option>
+                <option value="18">6:00 PM</option>
+                <option value="19">7:00 PM</option>
+                <option value="20">8:00 PM</option>
+                <option value="21">9:00 PM</option>
+                <option value="22">10:00 PM</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Days</label>
+            <div class="days-selection">
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="mon"> Monday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="tue"> Tuesday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="wed"> Wednesday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="thu"> Thursday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="fri"> Friday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="sat"> Saturday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="sun"> Sunday
+              </label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="priority">Priority</label>
+            <select id="priority" class="form-control">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus-circle"></i> Add to Timetable
+          </button>
+        </form>
+      </div>
+
+      <!-- Timetable Preview -->
+      <div class="timetable-preview">
+        <h2>Your Weekly Schedule</h2>
+        
+        <div class="timetable-grid">
+          <!-- Time column headers -->
+          <div class="grid-header">Time</div>
+          <div class="grid-header">Monday</div>
+          <div class="grid-header">Tuesday</div>
+          <div class="grid-header">Wednesday</div>
+          <div class="grid-header">Thursday</div>
+          <div class="grid-header">Friday</div>
+          <div class="grid-header">Saturday</div>
+          <div class="grid-header">Sunday</div>
+          
+          <!-- Time slots will be populated by JavaScript -->
+        </div>
+        
+        <div class="session-details">
+          <h3>Your Study Sessions</h3>
+          <ul class="session-list" id="sessionList">
+            <li class="no-sessions">No study sessions added yet. Use the form above to create your schedule.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal" id="loginModal">
+  <div class="modal-content">
+    <button class="close-btn" id="closeModal">&times;</button>
+    <h2>Login</h2>
+
+    <!-- Add a proper form with correct IDs -->
+  
+<form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem;">Login</button>
+      <p id="loginError" style="color:red;margin-top:0.5rem;"></p>
+    </form>
+  </div>
+</div>
+<!-- Make sure your script is linked AFTER this -->
+<script src="login.js">defer </script>
+
+
+  <!-- NEW: Exam Details Modal -->
+  <div class="exam-modal" id="examModal">
+    <div class="exam-modal-content">
+      <div class="exam-modal-header">
+        <h2 id="modalExamTitle">Exam Details</h2>
+        <button class="close-btn" onclick="closeExamModal()">&times;</button>
+      </div>
+      
+      <div class="exam-info-section">
+        <h3><i class="fas fa-graduation-cap"></i> Prerequisites</h3>
+        <ul id="modalPrerequisites">
+          <!-- Filled by JavaScript -->
+        </ul>
+      </div>
+      
+      <div class="exam-info-section">
+        <h3><i class="fas fa-briefcase"></i> Career Opportunities</h3>
+        <ul id="modalCareer">
+          <!-- Filled by JavaScript -->
+        </ul>
+      </div>
+      
+      <div class="exam-info-section">
+        <h3><i class="fas fa-chart-bar"></i> Previous Year Cutoffs</h3>
+        <div id="modalCutoffs">
+          <!-- Filled by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="scriptss/main.js" defer></script>
+<script src="scriptss/animations.js" defer></script>
+<script src="scriptss/navigation.js" defer></script>
+<script src="scriptss/timetable.js" defer></script>
+<script src="scripts/login.js" defer></script>
+
+  
+</body>
+</html>

@@ -1,0 +1,1050 @@
+
+:root {
+  --primary: #006660; /* deep teal */
+  --highlight: #FFB300; /* warm gold */
+  --bg: #FAF3E0; /* soft cream */
+  --text: #0D1B2A; /* deep navy */
+  --muted: #5C5C5C;
+  --radius: 14px;
+}
+* {margin:0;padding:0;box-sizing:border-box;}
+body {font-family: 'Segoe UI', sans-serif;background: var(--bg);color: var(--text);}
+
+header {
+  position: fixed;top: 0;width: 100%;
+  background: white;padding: 1rem 2rem;
+  display: flex;justify-content: space-between;align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  z-index: 1000;
+}
+.brand {font-weight: bold;color: var(--primary);font-size: 1.3rem;}
+nav a {
+  margin: 0 0.8rem;text-decoration: none;color: var(--text);
+  padding: 0.5rem 1rem;border-radius: var(--radius);
+  transition: background 0.3s;
+}
+nav a:hover, nav a.active {background: var(--highlight);color: white;}
+
+section {
+  min-height: 100vh;
+  padding-top: 4rem; /* Account for fixed header */
+  display: none;
+  transition: opacity 0.6s ease;
+}
+section.active {
+  display: block;
+  opacity: 1;
+}
+
+.btn {
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn-primary:hover {background: #004d4d;}
+.btn-secondary {
+  background: var(--highlight);
+  color: white;
+}
+.btn-secondary:hover {background: #cc8e00;}
+
+/* Login modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2000;
+}
+.modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius);
+  width: 300px;
+  text-align: left;
+  position: relative;
+}
+.modal-content input {
+  width: 100%;
+  padding: 0.6rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+/* Exam explorer styles (fitted to theme) */
+.tabs {
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  padding: 0.5rem;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 1rem;
+}
+.tab-btn {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: var(--bg);
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: background 0.2s, transform 0.2s;
+}
+.tab-btn:hover {
+  transform: scale(1.05);
+  background: #f0e2c7;
+}
+.tab-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+.main {
+  display: flex;
+  gap: 1rem;
+}
+.sidebar {
+  width: 250px;
+  background: #fff;
+  padding: 1rem;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+/* square exam cards */
+.exam-card {
+  border: 1px solid #ddd;
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  aspect-ratio: 1/1; /* square shape */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  position: relative;
+}
+.exam-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.exam-card button {
+  margin-top: 0.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  width: 100%;
+}
+.exam-card button:hover {
+  background: #004d4d;
+}
+
+/* NEW: Learn More button */
+.learn-more-btn {
+  background: var(--highlight) !important;
+  margin-top: 0.5rem;
+}
+.learn-more-btn:hover {
+  background: #e6a100 !important;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+}
+
+/* -------- Updated Home Page Layout -------- */
+.home-container {
+  display: flex;
+  flex-direction: column;
+}
+.home-image {
+  height: 50vh;
+  background: url("https://img.freepik.com/free-vector/gradient-international-day-education-background_23-2151120677.jpg") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.home-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+.home-image h1 {
+  color: white;
+  font-size: 3.5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+  z-index: 1;
+}
+.home-content {
+  padding: 3rem;
+  text-align: center;
+}
+.home-content h1 {
+  margin-bottom: 2rem;
+  color: var(--primary);
+}
+.home-content p {
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* New Features Section */
+.features {
+  padding: 4rem 2rem;
+  background: white;
+  text-align: center;
+}
+.features h2 {
+  color: var(--primary);
+  margin-bottom: 3rem;
+  font-size: 2.2rem;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.feature-card {
+  background: var(--bg);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.feature-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+.feature-icon {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+.feature-card h3 {
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+/* Stats Section */
+.stats {
+  padding: 4rem 2rem;
+  background: var(--primary);
+  color: white;
+  text-align: center;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.stat-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+.stat-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Section visibility fix */
+#about, #courses, #timetable {
+  display: none;
+  padding: 5rem 2rem 2rem;
+  min-height: 100vh;
+}
+
+#about.active, #courses.active, #timetable.active {
+  display: block;
+}
+
+/* ========== UPDATED ABOUT SECTION ========== */
+.about-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.about-image {
+  flex: 1;
+  min-width: 300px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.8s ease;
+}
+
+.about-image.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.about-image:hover img {
+  transform: scale(1.05);
+}
+
+.about-content {
+  flex: 1;
+  min-width: 300px;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.8s ease 0.2s;
+}
+
+.about-content.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.about-content h1 {
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+}
+
+.about-content p {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.about-highlights {
+  margin: 2rem 0;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+.highlight-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.highlight-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.about-mission-vision {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.mission-card, .vision-card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.mission-card.visible, .vision-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mission-card h3, .vision-card h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.mission-card h3 i, .vision-card h3 i {
+  margin-right: 0.5rem;
+}
+
+/* NEW: Exam Details Modal */
+.exam-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 1rem;
+}
+
+.exam-modal.active {
+  display: flex;
+}
+
+.exam-modal-content {
+  background: white;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  border-radius: var(--radius);
+  padding: 2rem;
+  position: relative;
+  overflow-y: auto;
+}
+
+.exam-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.exam-modal-header h2 {
+  color: var(--primary);
+  margin: 0;
+}
+
+.exam-info-section {
+  margin-bottom: 2rem;
+}
+
+.exam-info-section h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.exam-info-section h3 i {
+  margin-right: 0.5rem;
+}
+
+.exam-info-section ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.exam-info-section li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.cutoff-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.cutoff-table th, .cutoff-table td {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.cutoff-table th {
+  background: var(--primary);
+  color: white;
+}
+
+.cutoff-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.highlight {
+  color: var(--highlight);
+  font-weight: bold;
+}
+
+/* Preparation Modal Styles */
+.preparation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  padding: 1rem;
+}
+
+.preparation-modal.active {
+  display: flex;
+}
+
+.preparation-modal-content {
+  background: white;
+  width: 95%;
+  max-width: 900px;
+  max-height: 90vh;
+  border-radius: var(--radius);
+  padding: 2rem;
+  position: relative;
+  overflow-y: auto;
+}
+
+.preparation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--primary);
+}
+
+.preparation-header h2 {
+  color: var(--primary);
+  margin: 0;
+}
+
+.preparation-section {
+  margin-bottom: 2.5rem;
+}
+
+.preparation-section h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.preparation-section h3 i {
+  margin-right: 0.5rem;
+}
+
+/* Registration Info */
+.registration-info {
+  background: var(--bg);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+}
+
+.registration-info p {
+  margin-bottom: 0.5rem;
+}
+
+.registration-info a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.registration-info a:hover {
+  text-decoration: underline;
+}
+
+/* Subjects Grid */
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.subject-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--muted);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.subject-card.priority-high {
+  border-left-color: #ff6b6b;
+}
+
+.subject-card.priority-very-high {
+  border-left-color: #ff4757;
+}
+
+.subject-card.priority-medium {
+  border-left-color: var(--highlight);
+}
+
+.priority-badge {
+  background: var(--primary);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* Resources Grid */
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.resource-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid #eee;
+  transition: transform 0.2s;
+}
+
+.resource-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.rating {
+  color: var(--highlight);
+  font-size: 0.9rem;
+}
+
+.resource-link {
+  display: inline-flex;
+  align-items: center;
+  background: #ff0000;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.resource-link:hover {
+  background: #cc0000;
+  color: white;
+}
+
+.resource-link i {
+  margin-right: 0.5rem;
+}
+
+/* Books List */
+.books-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.book-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid #eee;
+  position: relative;
+}
+
+.book-card.essential {
+  border: 2px solid var(--highlight);
+  background: #fff9e6;
+}
+
+.essential-badge {
+  background: var(--highlight);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.book-link {
+  display: inline-flex;
+  align-items: center;
+  background: var(--primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.book-link:hover {
+  background: #004d4d;
+  color: white;
+}
+
+.book-link i {
+  margin-right: 0.5rem;
+}
+
+/* Preparation Actions */
+.preparation-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+
+@media (max-width: 768px) {
+  .preparation-actions {
+    flex-direction: column;
+  }
+  
+  .subjects-grid,
+  .resources-grid,
+  .books-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Timetable Section Styles */
+.timetable-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.timetable-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.timetable-header h1 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.timetable-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Study Summary */
+.study-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.summary-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.summary-content h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.summary-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+/* Timetable Creator */
+.timetable-creator {
+  background: white;
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: var(--radius);
+  font-size: 1rem;
+}
+
+.time-range {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.days-selection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.day-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Timetable Grid */
+.timetable-preview {
+  background: white;
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.timetable-grid {
+  display: grid;
+  grid-template-columns: 100px repeat(7, 1fr);
+  gap: 1px;
+  background: #eee;
+  border: 1px solid #eee;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.grid-header {
+  background: var(--primary);
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.time-slot {
+  background: white;
+  padding: 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+.day-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.study-session {
+  background: var(--highlight);
+  color: white;
+  padding: 0.5rem;
+  margin: 2px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.study-session:hover {
+  transform: scale(1.02);
+}
+
+.empty-slot {
+  min-height: 40px;
+  background: white;
+  border-bottom: 1px solid #eee;
+}
+
+/* Session Details */
+.session-details {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: var(--radius);
+}
+
+.session-list {
+  list-style: none;
+}
+
+.session-item {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  margin-bottom: 0.5rem;
+  border-radius: var(--radius);
+}
+
+.session-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.no-sessions {
+  text-align: center;
+  color: var(--muted);
+  padding: 2rem;
+}
+
+.priority-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  background: var(--muted);
+  color: white;
+}
+
+.btn-delete {
+  background: #ff4757;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-delete:hover {
+  background: #ff3742;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .timetable-grid {
+    grid-template-columns: 80px repeat(7, 1fr);
+    font-size: 0.8rem;
+  }
+  
+  .grid-header, .time-slot {
+    padding: 0.5rem;
+  }
+  
+  .study-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .time-range {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+/* Add to your existing CSS */
+#exploreExamsBtn {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#exploreExamsBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
