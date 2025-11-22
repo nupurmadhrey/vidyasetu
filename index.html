@@ -1,0 +1,2559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vidyasetu — V1.3</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Vidyasetu Login Styles */
+    .login-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(0, 102, 96, 0.8), rgba(0, 102, 96, 0.9)), 
+                  url('https://img.freepik.com/free-vector/gradient-international-day-education-background_23-2151120677.jpg') center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    
+    .login-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transform: translateY(0);
+      animation: floatIn 0.8s ease-out;
+    }
+    
+    @keyframes floatIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .login-title {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      color: #006660;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .login-input {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s;
+      background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .login-input:focus {
+      outline: none;
+      border-color: #006660;
+      box-shadow: 0 0 0 3px rgba(0, 102, 96, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .login-button {
+      width: 100%;
+      padding: 1rem;
+      background: #006660;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 6px rgba(0, 102, 96, 0.3);
+    }
+    
+    .login-button:hover {
+      background: #004d4d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 102, 96, 0.4);
+    }
+    
+    .login-button:active {
+      transform: translateY(0);
+    }
+    
+    .login-links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+    }
+    
+    .login-link {
+      color: #006660;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s;
+      padding: 0.5rem 0.8rem;
+      border-radius: 6px;
+    }
+    
+    .login-link:hover {
+      background: rgba(0, 102, 96, 0.1);
+      text-decoration: none;
+      transform: translateY(-2px);
+    }
+    
+    .login-footer {
+      margin-top: 2rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+    
+    .logout-button {
+      background: #f44336;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .logout-button:hover {
+      background: #d32f2f;
+    }
+    
+    /* Hide main content initially */
+    .main-content {
+      display: none;
+    }
+
+    /* Your existing styles */
+    :root {
+      --primary: #006660; /* deep teal */
+      --highlight: #FFB300; /* warm gold */
+      --bg: #FAF3E0; /* soft cream */
+      --text: #0D1B2A; /* deep navy */
+      --muted: #5C5C5C;
+      --radius: 14px;
+    }
+    * {margin:0;padding:0;box-sizing:border-box;}
+    body {font-family: 'Segoe UI', sans-serif;background: var(--bg);color: var(--text);}
+
+    header {
+      position: fixed;top: 0;width: 100%;
+      background: white;padding: 1rem 2rem;
+      display: flex;justify-content: space-between;align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      z-index: 1000;
+    }
+    .brand {font-weight: bold;color: var(--primary);font-size: 1.3rem;}
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    nav a {
+      margin: 0 0.8rem;text-decoration: none;color: var(--text);
+      padding: 0.5rem 1rem;border-radius: var(--radius);
+      transition: background 0.3s;
+    }
+    nav a:hover, nav a.active {background: var(--highlight);color: white;}
+
+    section {
+      min-height: 100vh;
+      padding-top: 4rem; /* Account for fixed header */
+      display: none;
+      transition: opacity 0.6s ease;
+    }
+    section.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .btn {
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover {background: #004d4d;}
+    .btn-secondary {
+      background: var(--highlight);
+      color: white;
+    }
+    .btn-secondary:hover {background: #cc8e00;}
+
+    /* Login modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 2000;
+    }
+    .modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      width: 300px;
+      text-align: left;
+      animation: scaleIn 0.3s ease forwards;
+      position: relative;
+    }
+    @keyframes scaleIn {
+      from {transform: scale(0.9);opacity: 0;}
+      to {transform: scale(1);opacity: 1;}
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 0.6rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: var(--radius);
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    /* Exam explorer styles (fitted to theme) */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      background: #fff;
+      padding: 0.5rem;
+      border-bottom: 2px solid #eee;
+      margin-bottom: 1rem;
+    }
+    .tab-btn {
+      margin: 0 0.5rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      background: var(--bg);
+      cursor: pointer;
+      border-radius: var(--radius);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .tab-btn:hover {
+      transform: scale(1.05);
+      background: #f0e2c7;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .main {
+      display: flex;
+      gap: 1rem;
+    }
+    .sidebar {
+      width: 250px;
+      background: #fff;
+      padding: 1rem;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .content {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    /* square exam cards */
+    .exam-card {
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+      aspect-ratio: 1/1; /* square shape */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 1rem;
+      position: relative;
+    }
+    .exam-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .exam-card button {
+      margin-top: 0.5rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      width: 100%;
+    }
+    .exam-card button:hover {
+      background: #004d4d;
+    }
+    
+    /* NEW: Learn More button */
+    .learn-more-btn {
+      background: var(--highlight) !important;
+      margin-top: 0.5rem;
+    }
+    .learn-more-btn:hover {
+      background: #e6a100 !important;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: var(--radius);
+    }
+
+    /* -------- Updated Home Page Layout -------- */
+    .home-container {
+      display: flex;
+      flex-direction: column;
+    }
+    .home-image {
+      height: 50vh;
+      background: url("https://img.freepik.com/free-vector/gradient-international-day-education-background_23-2151120677.jpg") center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .home-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .home-image h1 {
+      color: white;
+      font-size: 3.5rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      z-index: 1;
+      animation: fadeInDown 1s ease-out;
+    }
+    .home-content {
+      padding: 3rem;
+      text-align: center;
+    }
+    .home-content h1 {
+      margin-bottom: 2rem;
+      color: var(--primary);
+      animation: fadeIn 1.2s ease-out;
+    }
+    .home-content p {
+      margin-bottom: 2rem;
+      font-size: 1.4rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeIn 1.4s ease-out;
+    }
+    
+    /* New Features Section */
+    .features {
+      padding: 4rem 2rem;
+      background: white;
+      text-align: center;
+    }
+    .features h2 {
+      color: var(--primary);
+      margin-bottom: 3rem;
+      font-size: 2.2rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--bg);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .feature-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .feature-card h3 {
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    
+    /* Stats Section */
+    .stats {
+      padding: 4rem 2rem;
+      background: var(--primary);
+      color: white;
+      text-align: center;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .stat-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+    .stat-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Section visibility fix */
+    #about, #courses, #timetable {
+      display: none;
+      padding: 5rem 2rem 2rem;
+      min-height: 100vh;
+    }
+    
+    #about.active, #courses.active, #timetable.active {
+      display: block;
+    }
+
+    /* ========== UPDATED ABOUT SECTION ========== */
+    .about-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .about-image {
+      flex: 1;
+      min-width: 300px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: all 0.8s ease;
+    }
+    
+    .about-image.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .about-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    
+    .about-image:hover img {
+      transform: scale(1.05);
+    }
+    
+    .about-content {
+      flex: 1;
+      min-width: 300px;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: all 0.8s ease 0.2s;
+    }
+    
+    .about-content.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .about-content h1 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
+    }
+    
+    .about-content p {
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+    
+    .about-highlights {
+      margin: 2rem 0;
+    }
+    
+    .highlight-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+    
+    .highlight-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .highlight-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      flex-shrink: 0;
+    }
+    
+    .about-mission-vision {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .mission-card, .vision-card {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    
+    .mission-card.visible, .vision-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .mission-card h3, .vision-card h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .mission-card h3 i, .vision-card h3 i {
+      margin-right: 0.5rem;
+    }
+    
+    /* NEW: Exam Details Modal */
+    .exam-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+    
+    .exam-modal.active {
+      display: flex;
+    }
+    
+    .exam-modal-content {
+      background: white;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      border-radius: var(--radius);
+      padding: 2rem;
+      position: relative;
+      overflow-y: auto;
+      animation: scaleIn 0.3s ease forwards;
+    }
+    
+    .exam-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .exam-modal-header h2 {
+      color: var(--primary);
+      margin: 0;
+    }
+    
+    .exam-info-section {
+      margin-bottom: 2rem;
+    }
+    
+    .exam-info-section h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .exam-info-section h3 i {
+      margin-right: 0.5rem;
+    }
+    
+    .exam-info-section ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .exam-info-section li {
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+    
+    .cutoff-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .cutoff-table th, .cutoff-table td {
+      padding: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .cutoff-table th {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .cutoff-table tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    
+    .highlight {
+      color: var(--highlight);
+      font-weight: bold;
+    }
+    
+    /* Preparation Modal Styles */
+    .preparation-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 3000;
+        padding: 1rem;
+    }
+
+    .preparation-modal.active {
+        display: flex;
+    }
+
+    .preparation-modal-content {
+        background: white;
+        width: 95%;
+        max-width: 900px;
+        max-height: 90vh;
+        border-radius: var(--radius);
+        padding: 2rem;
+        position: relative;
+        overflow-y: auto;
+    }
+
+    .preparation-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--primary);
+    }
+
+    .preparation-header h2 {
+        color: var(--primary);
+        margin: 0;
+    }
+
+    .preparation-section {
+        margin-bottom: 2.5rem;
+    }
+
+    .preparation-section h3 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .preparation-section h3 i {
+        margin-right: 0.5rem;
+    }
+
+    /* Registration Info */
+    .registration-info {
+        background: var(--bg);
+        padding: 1.5rem;
+        border-radius: var(--radius);
+    }
+
+    .registration-info p {
+        margin-bottom: 0.5rem;
+    }
+
+    .registration-info a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .registration-info a:hover {
+        text-decoration: underline;
+    }
+
+    /* Subjects Grid */
+    .subjects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    .subject-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: var(--radius);
+        border-left: 4px solid var(--muted);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .subject-card.priority-high {
+        border-left-color: #ff6b6b;
+    }
+
+    .subject-card.priority-very-high {
+        border-left-color: #ff4757;
+    }
+
+    .subject-card.priority-medium {
+        border-left-color: var(--highlight);
+    }
+
+    .priority-badge {
+        background: var(--primary);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    /* Resources Grid */
+    .resources-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+    }
+
+    .resource-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: var(--radius);
+        border: 1px solid #eee;
+        transition: transform 0.2s;
+    }
+
+    .resource-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .rating {
+        color: var(--highlight);
+        font-size: 0.9rem;
+    }
+
+    .resource-link {
+        display: inline-flex;
+        align-items: center;
+        background: #ff0000;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius);
+        text-decoration: none;
+        margin-top: 0.5rem;
+        font-weight: bold;
+    }
+
+    .resource-link:hover {
+        background: #cc0000;
+        color: white;
+    }
+
+    .resource-link i {
+        margin-right: 0.5rem;
+    }
+
+    /* Books List */
+    .books-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+
+    .book-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: var(--radius);
+        border: 1px solid #eee;
+        position: relative;
+    }
+
+    .book-card.essential {
+        border: 2px solid var(--highlight);
+        background: #fff9e6;
+    }
+
+    .essential-badge {
+        background: var(--highlight);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .book-link {
+        display: inline-flex;
+        align-items: center;
+        background: var(--primary);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius);
+        text-decoration: none;
+        margin-top: 0.5rem;
+        font-weight: bold;
+    }
+
+    .book-link:hover {
+        background: #004d4d;
+        color: white;
+    }
+
+    .book-link i {
+        margin-right: 0.5rem;
+    }
+
+    /* Preparation Actions */
+    .preparation-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #eee;
+    }
+
+    @media (max-width: 768px) {
+        .preparation-actions {
+            flex-direction: column;
+        }
+        
+        .subjects-grid,
+        .resources-grid,
+        .books-list {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    /* Timetable Section Styles */
+    .timetable-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .timetable-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .timetable-header h1 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .timetable-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Study Summary */
+    .study-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .summary-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .summary-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .summary-content h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    /* Timetable Creator */
+    .timetable-creator {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      font-size: 1rem;
+    }
+
+    .time-range {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .days-selection {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .day-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Timetable Grid */
+    .timetable-preview {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .timetable-grid {
+      display: grid;
+      grid-template-columns: 100px repeat(7, 1fr);
+      gap: 1px;
+      background: #eee;
+      border: 1px solid #eee;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .grid-header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .time-slot {
+      background: white;
+      padding: 0.5rem;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+      font-size: 0.9rem;
+    }
+
+    .day-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .study-session {
+      background: var(--highlight);
+      color: white;
+      padding: 0.5rem;
+      margin: 2px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .study-session:hover {
+      transform: scale(1.02);
+    }
+
+    .empty-slot {
+      min-height: 40px;
+      background: white;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* Session Details */
+    .session-details {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #f9f9f9;
+      border-radius: var(--radius);
+    }
+
+    .session-list {
+      list-style: none;
+    }
+
+    .session-item {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      margin-bottom: 0.5rem;
+      border-radius: var(--radius);
+    }
+
+    .session-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .no-sessions {
+      text-align: center;
+      color: var(--muted);
+      padding: 2rem;
+    }
+
+    .priority-badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      background: var(--muted);
+      color: white;
+    }
+
+    .btn-delete {
+      background: #ff4757;
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-delete:hover {
+      background: #ff3742;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .timetable-grid {
+        grid-template-columns: 80px repeat(7, 1fr);
+        font-size: 0.8rem;
+      }
+      
+      .grid-header, .time-slot {
+        padding: 0.5rem;
+      }
+      
+      .study-summary {
+        grid-template-columns: 1fr;
+      }
+      
+      .time-range {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Vidyasetu Login System -->
+  <div class="login-container" id="loginContainer">
+    <div class="login-box">
+      <div class="login-title">Vidyasetu</div>
+      <input type="text" class="login-input" placeholder="Username" id="username">
+      <input type="password" class="login-input" placeholder="Password" id="password">
+      <button class="login-button" id="loginButton">Login to Vidyasetu</button>
+      <div class="login-links">
+        <a href="#" class="login-link">Forgot Password?</a>
+        <a href="#" class="login-link" id="createAccountLink">Create Account</a>
+      </div>
+      <div class="login-footer">
+        Empowering India's Exam Aspirants
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Website Content (hidden until login) -->
+  <div class="main-content" id="mainContent">
+    <header>
+      <div class="brand">Vidyasetu</div>
+      <nav>
+        <a href="#" class="active" data-section="home">Home</a>
+        <a href="#" data-section="about">About</a>
+        <a href="#" data-section="courses">All Exams</a>
+        <a href="#" data-section="timetable">My Timetable</a>
+        <button class="logout-button" id="logoutBtn">Logout</button>
+      </nav>
+    </header>
+
+    <!-- ✅ Updated Home Section -->
+    <section id="home" class="active">
+      <div class="home-container">
+        <div class="home-image">
+          <h1>Vidyasetu</h1>
+        </div>
+        <div class="home-content">
+          <h1>Welcome to Vidyasetu</h1>
+          <p>Centralized platform for government exam dates, resources & personalized timetables.</p>
+          <button class="btn btn-primary" id="exploreExamsBtn">Explore Exams</button>
+        </div>
+        
+        <!-- New Features Section -->
+        <div class="features">
+          <h2>Why Choose Vidyasetu?</h2>
+          <div class="features-grid">
+            <div class="feature-card animate-on-scroll">
+              <div class="feature-icon">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
+              <h3>Exam Calendar</h3>
+              <p>Never miss an important exam date with our comprehensive calendar.</p>
+            </div>
+            <div class="feature-card animate-on-scroll">
+              <div class="feature-icon">
+                <i class="fas fa-book-open"></i>
+              </div>
+              <h3>Study Resources</h3>
+              <p>Access curated study materials and previous year question papers.</p>
+            </div>
+            <div class="feature-card animate-on-scroll">
+              <div class="feature-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <h3>Performance Tracking</h3>
+              <p>Monitor your progress with detailed analytics and insights.</p>
+            </div>
+            <div class="feature-card animate-on-scroll">
+              <div class="feature-icon">
+                <i class="fas fa-bell"></i>
+              </div>
+              <h3>Smart Notifications</h3>
+              <p>Get timely alerts for exam updates, deadlines, and new resources.</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Stats Section -->
+        <div class="stats">
+          <h2>Our Impact</h2>
+          <div class="stats-grid">
+            <div class="stat-item animate-on-scroll">
+              <div class="stat-number" id="examCount">50+</div>
+              <div class="stat-label">Exams Covered</div>
+            </div>
+            <div class="stat-item animate-on-scroll">
+              <div class="stat-number" id="userCount">10,000+</div>
+              <div class="stat-label">Active Users</div>
+            </div>
+            <div class="stat-item animate-on-scroll">
+              <div class="stat-number" id="successCount">95%</div>
+              <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat-item animate-on-scroll">
+              <div class="stat-number" id="resourceCount">500+</div>
+              <div class="stat-label">Study Resources</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== UPDATED ABOUT SECTION ========== -->
+    <section id="about">
+      <div class="about-container">
+        <div class="about-image animate-on-scroll">
+          <img src="https://i.pinimg.com/736x/0b/6c/b1/0b6cb1a71ca09f9eeff65bac7f4dda16.jpg" alt="Vidyasetu - Empowering Government Exam Aspirants">
+        </div>
+        <div class="about-content animate-on-scroll">
+          <h1>About Vidyasetu</h1>
+          <p>Vidyasetu is a comprehensive platform designed to empower government exam aspirants across India. We bring all government exam updates, resources, and preparation tools into one centralized platform, helping aspirants prepare with ease and efficiency.</p>
+          
+          <p>Our mission is to bridge the information gap that often hinders talented individuals from achieving their dream government jobs. With Vidyasetu, you get access to timely notifications, curated study materials, and personalized study plans.</p>
+          
+          <div class="about-highlights">
+            <div class="highlight-item animate-on-scroll">
+              <div class="highlight-icon">
+                <i class="fas fa-check"></i>
+              </div>
+              <div>
+                <strong>Comprehensive Exam Coverage</strong>
+                <p>From UPSC to state-level exams, we've got you covered</p>
+              </div>
+            </div>
+            
+            <div class="highlight-item animate-on-scroll">
+              <div class="highlight-icon">
+                <i class="fas fa-check"></i>
+              </div>
+              <div>
+                <strong>Personalized Study Plans</strong>
+                <p>Tailored timetables based on your exam and preparation level</p>
+              </div>
+            </div>
+            
+            <div class="highlight-item animate-on-scroll">
+              <div class="highlight-icon">
+                <i class="fas fa-check"></i>
+              </div>
+              <div>
+                <strong>Expert-Curated Resources</strong>
+                <p>Quality study materials prepared by subject matter experts</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="about-mission-vision">
+            <div class="mission-card animate-on-scroll">
+              <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+              <p>To democratize access to quality exam preparation resources and empower every aspirant to achieve their career goals in government services through technology-enabled learning solutions.</p>
+            </div>
+            
+            <div class="vision-card animate-on-scroll">
+              <h3><i class="fas fa-eye"></i> Our Vision</h3>
+              <p>To become India's most trusted and comprehensive platform for government exam preparation, recognized for our commitment to student success and innovation in educational technology.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="courses">
+      <h1 style="text-align:center;margin-bottom:1rem;">All Exams</h1>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="selectTab('all')">All Exams</button>
+        <button class="tab-btn" onclick="selectTab('after12')">Post Intermediate</button>
+        <button class="tab-btn" onclick="selectTab('afterGrad')">Post Graduation</button>
+        <button class="tab-btn" onclick="selectTab('defence')">Defence & Armed Forces</button>
+      </div>
+
+      <div class="main">
+        <aside class="sidebar">
+          <input type="text" placeholder="Search exams..." class="search-input" oninput="filterExams()" />
+
+          <label><input type="checkbox" value="All India" onchange="filterExams()" /> All India</label><br/>
+          <label><input type="checkbox" value="State" onchange="filterExams()" /> State Level</label>
+
+          <select onchange="filterExams()" id="stateDropdown" style="width: 100%; margin-top: 1rem;">
+            <option value="">-- Select State --</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Karnataka">Karnataka</option>
+          </select>
+        </aside>
+
+        <section class="content" id="examContainer">
+          <!-- Original exams + more added -->
+          <div class="exam-card" data-tags="All India after12">
+            <h4>NEET</h4>
+            <p>Medical entrance exam</p>
+            <button class="prepare-btn" data-exam="neet">I want to prepare</button>
+            <button class="learn-more-btn" onclick="openExamModal('neet')">Learn More</button>
+          </div>
+          <div class="exam-card" data-tags="State Maharashtra afterGrad">
+            <h4>MPSC</h4>
+            <p>Maharashtra Public Service Commission</p>
+            <button class="prepare-btn" data-exam="mpsc">I want to prepare</button>
+            <button class="learn-more-btn" onclick="openExamModal('mpsc')">Learn More</button>
+          </div>
+          <div class="exam-card" data-tags="All India afterGrad">
+            <h4>UPSC</h4>
+            <p>Civil Services Exam</p>
+            <button class="prepare-btn" data-exam="upsc">I want to prepare</button>
+            <button class="learn-more-btn" onclick="openExamModal('upsc')">Learn More</button>
+          </div>
+          <div class="exam-card" data-tags="Defence All India after12">
+            <h4>NDA</h4>
+            <p>National Defence Academy</p>
+            <button class="prepare-btn" data-exam="nda">I want to prepare</button>
+            <button class="learn-more-btn" onclick="openExamModal('nda')">Learn More</button>
+          </div>
+          <div class="exam-card" data-tags="All India after12">
+            <h4>JEE</h4>
+            <p>Engineering entrance exam</p>
+            <button class="prepare-btn" data-exam="jee">I want to prepare</button>
+            <button class="learn-more-btn" onclick="openExamModal('jee')">Learn More</button>
+          </div>
+          <div class="exam-card" data-tags="State Uttar Pradesh afterGrad">
+            <h4>UPPCS</h4>
+            <p>Uttar Pradesh Public Service Commission</p>
+            <button class="prepare-btn" data-exam="uppcs">I want to prepare</button>
+            <button class="learn-more-btn" onclick="openExamModal('uppcs')">Learn More</button>
+          </div>
+          <div class="exam-card" data-tags="All India afterGrad">
+            <h4>SSC CGL</h4>
+            <p>Staff Selection Commission</p>
+            <button class="prepare-btn" data-exam="ssc">I want to prepare</button>
+            <button class="learn-more-btn" onclick="openExamModal('ssc')">Learn More</button>
+          </div>
+          <div class="exam-card" data-tags="State Telangana afterGrad">
+            <h4>TSPSC</h4>
+            <p>Telangana State Public Service Commission</p>
+            <button class="prepare-btn" data-exam="tspsc">I want to prepare</button>
+            <button class="learn-more-btn" onclick="openExamModal('tspsc')">Learn More</button>
+          </div>
+          <div class="exam-card" data-tags="Defence All India afterGrad">
+            <h4>AFCAT</h4>
+            <p>Air Force Common Admission Test</p>
+            <button class="prepare-btn" data-exam="afcat">I want to prepare</button>
+            <button class="learn-more-btn" onclick="openExamModal('afcat')">Learn More</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="timetable">
+    <div class="timetable-container">
+      <div class="timetable-header">
+        <h1>My Study Timetable</h1>
+        <p>Create and manage your personalized study schedule</p>
+        <div class="timetable-actions">
+          <button class="btn btn-primary" id="createSessionBtn">
+            <i class="fas fa-plus"></i> Add Study Session
+          </button>
+          <button class="btn btn-secondary" id="saveTimetableBtn">
+            <i class="fas fa-save"></i> Save Timetable
+          </button>
+          <button class="btn btn-secondary" id="resetTimetableBtn">
+            <i class="fas fa-redo"></i> Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Study Hours Summary -->
+      <div class="study-summary">
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="summary-content">
+            <h3>Total Study Hours</h3>
+            <div class="summary-value" id="totalHours">0 hrs</div>
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i class="fas fa-calendar-day"></i>
+          </div>
+          <div class="summary-content">
+            <h3>Sessions This Week</h3>
+            <div class="summary-value" id="totalSessions">0</div>
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="summary-content">
+            <h3>Subjects</h3>
+            <div class="summary-value" id="totalSubjects">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timetable Creator Form -->
+      <div class="timetable-creator">
+        <h2>Add Study Session</h2>
+        <form id="sessionForm">
+          <div class="form-group">
+            <label for="subject">Subject/Topic</label>
+            <input type="text" id="subject" class="form-control" placeholder="e.g., Mathematics, Physics, Current Affairs" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="timeRange">Time</label>
+            <div class="time-range">
+              <select id="startTime" class="form-control" required>
+                <option value="">Start Time</option>
+                <option value="6">6:00 AM</option>
+                <option value="7">7:00 AM</option>
+                <option value="8">8:00 AM</option>
+                <option value="9">9:00 AM</option>
+                <option value="10">10:00 AM</option>
+                <option value="11">11:00 AM</option>
+                <option value="12">12:00 PM</option>
+                <option value="13">1:00 PM</option>
+                <option value="14">2:00 PM</option>
+                <option value="15">3:00 PM</option>
+                <option value="16">4:00 PM</option>
+                <option value="17">5:00 PM</option>
+                <option value="18">6:00 PM</option>
+                <option value="19">7:00 PM</option>
+                <option value="20">8:00 PM</option>
+                <option value="21">9:00 PM</option>
+              </select>
+              <span>to</span>
+              <select id="endTime" class="form-control" required>
+                <option value="">End Time</option>
+                <option value="7">7:00 AM</option>
+                <option value="8">8:00 AM</option>
+                <option value="9">9:00 AM</option>
+                <option value="10">10:00 AM</option>
+                <option value="11">11:00 AM</option>
+                <option value="12">12:00 PM</option>
+                <option value="13">1:00 PM</option>
+                <option value="14">2:00 PM</option>
+                <option value="15">3:00 PM</option>
+                <option value="16">4:00 PM</option>
+                <option value="17">5:00 PM</option>
+                <option value="18">6:00 PM</option>
+                <option value="19">7:00 PM</option>
+                <option value="20">8:00 PM</option>
+                <option value="21">9:00 PM</option>
+                <option value="22">10:00 PM</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Days</label>
+            <div class="days-selection">
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="mon"> Monday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="tue"> Tuesday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="wed"> Wednesday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="thu"> Thursday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="fri"> Friday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="sat"> Saturday
+              </label>
+              <label class="day-checkbox">
+                <input type="checkbox" name="days" value="sun"> Sunday
+              </label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="priority">Priority</label>
+            <select id="priority" class="form-control">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus-circle"></i> Add to Timetable
+          </button>
+        </form>
+      </div>
+
+      <!-- Timetable Preview -->
+      <div class="timetable-preview">
+        <h2>Your Weekly Schedule</h2>
+        
+        <div class="timetable-grid">
+          <!-- Time column headers -->
+          <div class="grid-header">Time</div>
+          <div class="grid-header">Monday</div>
+          <div class="grid-header">Tuesday</div>
+          <div class="grid-header">Wednesday</div>
+          <div class="grid-header">Thursday</div>
+          <div class="grid-header">Friday</div>
+          <div class="grid-header">Saturday</div>
+          <div class="grid-header">Sunday</div>
+          
+          <!-- Time slots will be populated by JavaScript -->
+        </div>
+        
+        <div class="session-details">
+          <h3>Your Study Sessions</h3>
+          <ul class="session-list" id="sessionList">
+            <li class="no-sessions">No study sessions added yet. Use the form above to create your schedule.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+   
+
+    <div class="modal" id="loginModal">
+      <div class="modal-content">
+        <button class="close-btn" id="closeModal">&times;</button>
+        <h2>Login</h2>
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <button class="btn btn-primary" style="width:100%;margin-top:0.5rem;">Login</button>
+      </div>
+    </div>
+
+    <!-- NEW: Exam Details Modal -->
+    <div class="exam-modal" id="examModal">
+      <div class="exam-modal-content">
+        <div class="exam-modal-header">
+          <h2 id="modalExamTitle">Exam Details</h2>
+          <button class="close-btn" onclick="closeExamModal()">&times;</button>
+        </div>
+        
+        <div class="exam-info-section">
+          <h3><i class="fas fa-graduation-cap"></i> Prerequisites</h3>
+          <ul id="modalPrerequisites">
+            <!-- Filled by JavaScript -->
+          </ul>
+        </div>
+        
+        <div class="exam-info-section">
+          <h3><i class="fas fa-briefcase"></i> Career Opportunities</h3>
+          <ul id="modalCareer">
+            <!-- Filled by JavaScript -->
+          </ul>
+        </div>
+        
+        <div class="exam-info-section">
+          <h3><i class="fas fa-chart-bar"></i> Previous Year Cutoffs</h3>
+          <div id="modalCutoffs">
+            <!-- Filled by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Login System
+  const loginContainer = document.getElementById('loginContainer');
+  const mainContent = document.getElementById('mainContent');
+  const loginButton = document.getElementById('loginButton');
+  const logoutButton = document.getElementById('logoutBtn');
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+  const createAccountLink = document.getElementById('createAccountLink');
+  const exploreExamsBtn = document.getElementById('exploreExamsBtn');
+  
+  // Check if user is already logged in
+  if (localStorage.getItem('isLoggedIn') === 'true') {
+    loginContainer.style.display = 'none';
+    mainContent.style.display = 'block';
+  }
+  
+  // Login functionality
+  loginButton.addEventListener('click', function() {
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+    
+    // Simple validation - in a real app, you would check against a database
+    if (username && password) {
+      // Store login state
+      localStorage.setItem('isLoggedIn', 'true');
+      
+      // Hide login and show main content
+      loginContainer.style.display = 'none';
+      mainContent.style.display = 'block';
+    } else {
+      alert('Please enter both username and password');
+    }
+  });
+  
+  // Create Account functionality - redirects to All Exams section
+  createAccountLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    // Store login state
+    localStorage.setItem('isLoggedIn', 'true');
+    
+    // Hide login and show main content
+    loginContainer.style.display = 'none';
+    mainContent.style.display = 'block';
+    
+    // Navigate to All Exams section
+    navigateToSection('courses');
+  });
+  
+  // Explore Exams button functionality
+  exploreExamsBtn.addEventListener('click', function() {
+    navigateToSection('courses');
+  });
+  
+  // Function to navigate to a specific section
+  function navigateToSection(sectionId) {
+    document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+    document.querySelectorAll('section').forEach(section => section.classList.remove('active'));
+    
+    document.querySelector(`a[data-section="${sectionId}"]`).classList.add('active');
+    document.getElementById(sectionId).classList.add('active');
+    
+    // Scroll to top when switching sections
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
+  // Logout functionality
+  logoutButton.addEventListener('click', function() {
+    // Clear login state
+    localStorage.removeItem('isLoggedIn');
+    
+    // Show login and hide main content
+    loginContainer.style.display = 'flex';
+    mainContent.style.display = 'none';
+    
+    // Clear form
+    usernameInput.value = '';
+    passwordInput.value = '';
+  });
+
+  // Your existing JavaScript code for the website functionality
+  const navLinks = document.querySelectorAll('nav a[data-section]');
+  const sections = document.querySelectorAll('section');
+  
+  // Exam data for modals
+  const examData = {
+    neet: {
+      title: "NEET - National Eligibility cum Entrance Test",
+      prerequisites: [
+        "Must have passed 10+2 or equivalent with Physics, Chemistry, Biology/Biotechnology",
+        "Minimum 50% marks in PCB for General category (40% for reserved categories)",
+        "Minimum age: 17 years as of December 31 of admission year",
+        "Maximum attempts: No limit (as per latest guidelines)"
+      ],
+      career: [
+        "MBBS in government and private medical colleges",
+        "BDS (Bachelor of Dental Surgery)",
+        "BAMS (Bachelor of Ayurvedic Medicine and Surgery)",
+        "BHMS (Bachelor of Homeopathic Medicine and Surgery)",
+        "Other medical and paramedical courses"
+      ],
+      cutoffs: `
+        <table class="cutoff-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Cutoff Percentile</th>
+              <th>Marks Range (2023)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>General</td>
+              <td>50th Percentile</td>
+              <td>720-137</td>
+            </tr>
+            <tr>
+              <td>OBC</td>
+              <td>40th Percentile</td>
+              <td>136-107</td>
+            </tr>
+            <tr>
+              <td>SC</td>
+              <td>40th Percentile</td>
+              <td>136-107</td>
+            </tr>
+            <tr>
+              <td>ST</td>
+              <td>40th Percentile</td>
+              <td>136-107</td>
+            </tr>
+            <tr>
+              <td class="highlight">General-PwD</td>
+              <td class="highlight">45th Percentile</td>
+              <td class="highlight">136-121</td>
+            </tr>
+          </tbody>
+        </table>
+      `
+    },
+    upsc: {
+      title: "UPSC - Civil Services Examination",
+      prerequisites: [
+        "Bachelor's degree in any discipline from a recognized university",
+        "Age: 21-32 years (relaxation for reserved categories)",
+        "Indian citizenship",
+        "Maximum attempts: 6 for General, 9 for OBC, unlimited for SC/ST"
+      ],
+      career: [
+        "Indian Administrative Service (IAS)",
+        "Indian Police Service (IPS)",
+        "Indian Foreign Service (IFS)",
+        "Indian Revenue Service (IRS)",
+        "Other Group A and Group B central services"
+      ],
+      cutoffs: `
+        <table class="cutoff-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Prelims Cutoff</th>
+              <th>Mains Cutoff</th>
+              <th>Final Cutoff (2022)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>General</td>
+              <td>88.22</td>
+              <td>745</td>
+              <td>960</td>
+            </tr>
+            <tr>
+              <td>OBC</td>
+              <td>87.54</td>
+              <td>707</td>
+              <td>925</td>
+            </tr>
+            <tr>
+              <td>SC</td>
+              <td>74.08</td>
+              <td>700</td>
+              <td>890</td>
+            </tr>
+            <tr>
+              <td>ST</td>
+              <td>69.35</td>
+              <td>700</td>
+              <td>890</td>
+            </tr>
+            <tr>
+              <td class="highlight">EWS</td>
+              <td class="highlight">82.83</td>
+              <td class="highlight">745</td>
+              <td class="highlight">960</td>
+            </tr>
+          </tbody>
+        </table>
+      `
+    },
+    jee: {
+      title: "JEE - Joint Entrance Examination",
+      prerequisites: [
+        "Must have passed 10+2 or equivalent with Physics, Chemistry, Mathematics",
+        "Minimum 75% marks in 12th (65% for SC/ST) or be in top 20 percentile",
+        "Maximum attempts: 2 consecutive years for JEE Advanced",
+        "Age limit: For JEE Advanced, born on or after October 1, 1997 (relaxation for reserved categories)"
+      ],
+      career: [
+        "B.Tech in IITs, NITs, IIITs, and other GFTIs",
+        "B.Arch in top architecture colleges",
+        "B.Planning in specialized institutions",
+        "Dual degree programs (B.Tech + M.Tech)",
+        "Integrated M.Tech programs"
+      ],
+      cutoffs: `
+        <table class="cutoff-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>JEE Main Cutoff</th>
+              <th>Top IIT Cutoff (JEE Advanced)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>General</td>
+              <td>90.77 percentile</td>
+              <td>Rank 1-2500</td>
+            </tr>
+            <tr>
+              <td>OBC</td>
+              <td>73.61 percentile</td>
+              <td>Rank 2501-9000</td>
+            </tr>
+            <tr>
+              <td>SC</td>
+              <td>51.97 percentile</td>
+              <td>Rank 9001-15000</td>
+            </tr>
+            <tr>
+              <td>ST</td>
+              <td>37.23 percentile</td>
+              <td>Rank 15001-27000</td>
+            </tr>
+            <tr>
+              <td class="highlight">General-EWS</td>
+              <td class="highlight">75.62 percentile</td>
+              <td class="highlight">Rank 2501-5000</td>
+            </tr>
+          </tbody>
+        </table>
+      `
+    },
+    // Add more exam data as needed
+    mpsc: {
+      title: "MPSC - Maharashtra Public Service Commission",
+      prerequisites: [
+        "Bachelor's degree from a recognized university",
+        "Age: 19-38 years (relaxation for reserved categories)",
+        "Must be a domicile of Maharashtra",
+        "Knowledge of Marathi language required"
+      ],
+      career: [
+        "Maharashtra Administrative Service (MAS)",
+        "Police Sub-Inspector",
+        "Sales Tax Inspector",
+        "Block Development Officer",
+        "Various Group B services in Maharashtra government"
+      ],
+      cutoffs: `
+        <table class="cutoff-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Prelims Cutoff (2022)</th>
+              <th>Mains Cutoff (2022)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>General</td>
+              <td>105-110</td>
+              <td>720-750</td>
+            </tr>
+            <tr>
+              <td>OBC</td>
+              <td>95-100</td>
+              <td>680-710</td>
+            </tr>
+            <tr>
+              <td>SC</td>
+              <td>85-90</td>
+              <td>640-670</td>
+            </tr>
+            <tr>
+              <td>ST</td>
+              <td>80-85</td>
+              <td>610-640</td>
+            </tr>
+          </tbody>
+        </table>
+      `
+    }
+  };
+
+  // Preparation data for each exam
+  const preparationData = {
+      neet: {
+          title: "NEET Preparation Guide",
+          registration: {
+              officialLink: "https://neet.nta.nic.in",
+              dates: "Registration: Feb-April, Exam: May",
+              fee: "₹1600 (General), ₹1500 (OBC), ₹900 (SC/ST)"
+          },
+          subjects: [
+              { name: "Physics", topics: "Mechanics, Optics, Modern Physics", weightage: "25%", priority: "High" },
+              { name: "Chemistry", topics: "Organic, Inorganic, Physical", weightage: "25%", priority: "High" },
+              { name: "Biology", topics: "Botany, Zoology, Human Physiology", weightage: "50%", priority: "Very High" }
+          ],
+          youtube: [
+              { channel: "Physics Wallah", url: "https://youtube.com/c/PhysicsWallah", focus: "Complete Syllabus", rating: "★★★★★" },
+              { channel: "Unacademy NEET", url: "https://youtube.com/c/UnacademyNEET", focus: "Live Classes", rating: "★★★★☆" },
+              { channel: "KV eDUCARE", url: "https://youtube.com/c/KVeDUCARE", focus: "Biology Focus", rating: "★★★★☆" }
+          ],
+          books: [
+              { name: "NCERT Biology Class 11 & 12", author: "NCERT", essential: true, link: "https://www.amazon.in/s?k=ncert+biology+class+11+12" },
+              { name: "Concepts of Physics", author: "H.C. Verma", essential: true, link: "https://www.amazon.in/s?k=concepts+of+physics+hc+verma" },
+              { name: "Objective Chemistry", author: "R.K. Gupta", essential: false, link: "https://www.amazon.in/s?k=objective+chemistry+rk+gupta" }
+          ]
+      },
+      upsc: {
+          title: "UPSC Civil Services Preparation",
+          registration: {
+              officialLink: "https://upsc.gov.in",
+              dates: "Prelims: June, Mains: Sept, Interview: Jan-Mar",
+              fee: "₹100 (General), No fee for Females/SC/ST"
+          },
+          subjects: [
+              { name: "General Studies I", topics: "History, Geography, Polity", weightage: "Prelims", priority: "High" },
+              { name: "General Studies II", topics: "Governance, Constitution, Social Justice", weightage: "Prelims", priority: "High" },
+              { name: "General Studies III", topics: "Economy, Environment, Security", weightage: "Prelims", priority: "High" },
+              { name: "Essay", topics: "Current Issues, Philosophical", weightage: "Mains", priority: "Medium" }
+          ],
+          youtube: [
+              { channel: "StudyIQ IAS", url: "https://youtube.com/c/StudyIQEducation", focus: "Current Affairs", rating: "★★★★★" },
+              { channel: "Unacademy IAS", url: "https://youtube.com/c/UnacademyIAS", focus: "Complete Syllabus", rating: "★★★★☆" },
+              { channel: "Vision IAS", url: "https://youtube.com/c/VisionIAS", focus: "Mains Answer Writing", rating: "★★★★☆" }
+          ],
+          books: [
+              { name: "Indian Polity", author: "M. Laxmikanth", essential: true, link: "https://www.amazon.in/s?k=indian+polity+laxmikanth" },
+              { name: "Indian Economy", author: "Ramesh Singh", essential: true, link: "https://www.amazon.in/s?k=indian+economy+ramesh+singh" },
+              { name: "Geography of India", author: "Majid Hussain", essential: true, link: "https://www.amazon.in/s?k=geography+of+india+majid+hussain" }
+          ]
+      }
+  };
+
+  // Initialize the page
+  document.addEventListener('DOMContentLoaded', function() {
+    // Show only the home section initially
+    sections.forEach(s => s.classList.remove('active'));
+    document.getElementById('home').classList.add('active');
+    
+    // Set active nav link
+    navLinks.forEach(l => l.classList.remove('active'));
+    document.querySelector('a[data-section="home"]').classList.add('active');
+    
+    // Initialize animations
+    initAnimations();
+    
+    // Add event listeners to "I want to prepare" buttons
+    document.querySelectorAll('.prepare-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const examId = this.getAttribute('data-exam');
+        openPreparationModal(examId);
+      });
+    });
+    
+    // Initialize timetable
+    initTimetable();
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const targetSection = link.dataset.section;
+      navigateToSection(targetSection);
+    });
+  });
+
+  function selectTab(tag) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    filterExams(tag);
+  }
+
+  function filterExams(tab = '') {
+    const search = document.querySelector('.search-input').value.toLowerCase();
+    const allIndiaChecked = document.querySelector('input[value="All India"]').checked;
+    const stateChecked = document.querySelector('input[value="State"]').checked;
+    const selectedState = document.getElementById('stateDropdown').value;
+
+    document.querySelectorAll('.exam-card').forEach(card => {
+      const tags = card.getAttribute('data-tags').toLowerCase();
+      const title = card.querySelector('h4').innerText.toLowerCase();
+
+      let matchesTab = tab ? tags.includes(tab.toLowerCase()) : true;
+      let matchesSearch = title.includes(search);
+      let matchesAllIndia = !allIndiaChecked || tags.includes('all india');
+      let matchesState = !stateChecked || (selectedState && tags.includes(selectedState.toLowerCase()));
+
+      if (matchesTab && matchesSearch && matchesAllIndia && matchesState) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // NEW: Exam modal functions
+  function openExamModal(examId) {
+    const exam = examData[examId];
+    if (!exam) {
+      alert('Exam details not available yet.');
+      return;
+    }
+    
+    document.getElementById('modalExamTitle').textContent = exam.title;
+    
+    // Set prerequisites
+    const prerequisitesList = document.getElementById('modalPrerequisites');
+    prerequisitesList.innerHTML = '';
+    exam.prerequisites.forEach(req => {
+      const li = document.createElement('li');
+      li.textContent = req;
+      prerequisitesList.appendChild(li);
+    });
+    
+    // Set career opportunities
+    const careerList = document.getElementById('modalCareer');
+    careerList.innerHTML = '';
+    exam.career.forEach(opp => {
+      const li = document.createElement('li');
+      li.textContent = opp;
+      careerList.appendChild(li);
+    });
+    
+    // Set cutoffs
+    document.getElementById('modalCutoffs').innerHTML = exam.cutoffs;
+    
+    // Show modal
+    document.getElementById('examModal').classList.add('active');
+  }
+  
+  function closeExamModal() {
+    document.getElementById('examModal').classList.remove('active');
+  }
+
+  // Function to open preparation modal
+  function openPreparationModal(examId) {
+      const exam = preparationData[examId];
+      if (!exam) {
+          alert('Preparation guide not available for this exam yet.');
+          return;
+      }
+      
+      // Create modal HTML
+      const modalHTML = `
+          <div class="preparation-modal active">
+              <div class="preparation-modal-content">
+                  <div class="preparation-header">
+                      <h2>${exam.title}</h2>
+                      <button class="close-btn" onclick="closePreparationModal()">&times;</button>
+                  </div>
+                  
+                  <!-- Registration Section -->
+                  <div class="preparation-section">
+                      <h3><i class="fas fa-user-plus"></i> Registration & Application</h3>
+                      <div class="registration-info">
+                          <p><strong>Official Website:</strong> <a href="${exam.registration.officialLink}" target="_blank">Apply Here</a></p>
+                          <p><strong>Important Dates:</strong> ${exam.registration.dates}</p>
+                          <p><strong>Application Fee:</strong> ${exam.registration.fee}</p>
+                      </div>
+                  </div>
+                  
+                  <!-- Subjects Section -->
+                  <div class="preparation-section">
+                      <h3><i class="fas fa-book"></i> Subjects to Prepare</h3>
+                      <div class="subjects-grid">
+                          ${exam.subjects.map(subject => `
+                              <div class="subject-card priority-${subject.priority.toLowerCase().replace(' ', '-')}">
+                                  <h4>${subject.name}</h4>
+                                  <p><strong>Weightage:</strong> ${subject.weightage}</p>
+                                  <p><strong>Key Topics:</strong> ${subject.topics}</p>
+                                  <span class="priority-badge">${subject.priority} Priority</span>
+                              </div>
+                          `).join('')}
+                      </div>
+                  </div>
+                  
+                  <!-- YouTube Resources -->
+                  <div class="preparation-section">
+                      <h3><i class="fab fa-youtube"></i> YouTube Resources</h3>
+                      <div class="resources-grid">
+                          ${exam.youtube.map(channel => `
+                              <div class="resource-card">
+                                  <h4>${channel.channel} <span class="rating">${channel.rating}</span></h4>
+                                  <p>${channel.focus}</p>
+                                  <a href="${channel.url}" target="_blank" class="resource-link">
+                                      <i class="fab fa-youtube"></i> Visit Channel
+                                  </a>
+                              </div>
+                          `).join('')}
+                      </div>
+                  </div>
+                  
+                  <!-- Book Recommendations -->
+                  <div class="preparation-section">
+                      <h3><i class="fas fa-book-open"></i> Book Recommendations</h3>
+                      <div class="books-list">
+                          ${exam.books.map(book => `
+                              <div class="book-card ${book.essential ? 'essential' : ''}">
+                                  <h4>${book.name}</h4>
+                                  <p><strong>Author:</strong> ${book.author}</p>
+                                  ${book.essential ? '<span class="essential-badge">Must Have</span>' : ''}
+                                  <a href="${book.link}" target="_blank" class="book-link">
+                                      <i class="fas fa-shopping-cart"></i> Buy Now
+                                  </a>
+                              </div>
+                          `).join('')}
+                      </div>
+                  </div>
+                  
+                  <!-- Action Buttons -->
+                  <div class="preparation-actions">
+                      <button class="btn btn-primary" onclick="savePreparationPlan('${examId}')">
+                          <i class="fas fa-save"></i> Save This Plan
+                      </button>
+                      <button class="btn btn-secondary" onclick="closePreparationModal()">
+                          <i class="fas fa-times"></i> Close
+                      </button>
+                  </div>
+              </div>
+          </div>
+      `;
+      
+      // Add modal to page
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+  }
+
+  // Function to close preparation modal
+  function closePreparationModal() {
+      const modal = document.querySelector('.preparation-modal');
+      if (modal) {
+          modal.remove();
+      }
+  }
+
+  // Save preparation plan to localStorage
+  function savePreparationPlan(examId) {
+      const savedPlans = JSON.parse(localStorage.getItem('savedPreparationPlans') || '[]');
+      if (!savedPlans.includes(examId)) {
+          savedPlans.push(examId);
+          localStorage.setItem('savedPreparationPlans', JSON.stringify(savedPlans));
+      }
+      alert('Preparation plan saved! You can access it from your profile.');
+      closePreparationModal();
+  }
+
+  // Close modal when clicking outside
+  document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('preparation-modal')) {
+          closePreparationModal();
+      }
+  });
+
+  // Timetable functionality
+  function initTimetable() {
+    const sessionForm = document.getElementById('sessionForm');
+    const sessionList = document.getElementById('sessionList');
+    const saveTimetableBtn = document.getElementById('saveTimetableBtn');
+    const resetTimetableBtn = document.getElementById('resetTimetableBtn');
+    const timetableGrid = document.querySelector('.timetable-grid');
+    
+    let studySessions = JSON.parse(localStorage.getItem('studySessions')) || [];
+    
+    // Initialize timetable grid
+    initializeTimetableGrid();
+    
+    // Load existing sessions
+    loadSessions();
+    
+    // Handle form submission
+    if (sessionForm) {
+      sessionForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const subject = document.getElementById('subject').value;
+        const startTime = parseInt(document.getElementById('startTime').value);
+        const endTime = parseInt(document.getElementById('endTime').value);
+        const priority = document.getElementById('priority').value;
+        
+        // Get selected days
+        const dayCheckboxes = document.querySelectorAll('input[name="days"]:checked');
+        const days = Array.from(dayCheckboxes).map(cb => cb.value);
+        
+        if (days.length === 0) {
+          alert('Please select at least one day');
+          return;
+        }
+        
+        if (startTime >= endTime) {
+          alert('End time must be after start time');
+          return;
+        }
+        
+        // Create session object
+        const session = {
+          id: Date.now(),
+          subject,
+          startTime,
+          endTime,
+          days,
+          priority
+        };
+        
+        // Add to sessions array
+        studySessions.push(session);
+        
+        // Save to localStorage
+        saveSessions();
+        
+        // Update UI
+        addSessionToUI(session);
+        updateTimetableGrid();
+        updateStudySummary();
+        
+        // Reset form
+        sessionForm.reset();
+      });
+    }
+    
+    // Save timetable
+    if (saveTimetableBtn) {
+      saveTimetableBtn.addEventListener('click', function() {
+        saveSessions();
+        alert('Timetable saved successfully!');
+      });
+    }
+    
+    // Reset timetable
+    if (resetTimetableBtn) {
+      resetTimetableBtn.addEventListener('click', function() {
+        if (confirm('Are you sure you want to reset your timetable? This action cannot be undone.')) {
+          studySessions = [];
+          saveSessions();
+          updateTimetableGrid();
+          sessionList.innerHTML = '<li class="no-sessions">No study sessions added yet. Use the form above to create your schedule.</li>';
+          updateStudySummary();
+        }
+      });
+    }
+    
+    // Initialize timetable grid with time slots
+    function initializeTimetableGrid() {
+      // Clear existing grid (except headers)
+      while (timetableGrid.children.length > 8) {
+        timetableGrid.removeChild(timetableGrid.lastChild);
+      }
+      
+      // Add time slots (6 AM to 9 PM)
+      for (let hour = 6; hour <= 21; hour++) {
+        const timeSlot = document.createElement('div');
+        timeSlot.className = 'time-slot';
+        timeSlot.textContent = formatTime(hour);
+        timetableGrid.appendChild(timeSlot);
+        
+        // Add empty slots for each day
+        for (let day of ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']) {
+          const daySlot = document.createElement('div');
+          daySlot.className = 'day-column';
+          daySlot.id = `${day}-${hour}`;
+          timetableGrid.appendChild(daySlot);
+        }
+      }
+    }
+    
+    // Load sessions from localStorage
+    function loadSessions() {
+      if (studySessions.length > 0) {
+        sessionList.innerHTML = '';
+        studySessions.forEach(session => {
+          addSessionToUI(session);
+        });
+        updateTimetableGrid();
+        updateStudySummary();
+      }
+    }
+    
+    // Add session to the list
+    function addSessionToUI(session) {
+      if (sessionList.querySelector('.no-sessions')) {
+        sessionList.innerHTML = '';
+      }
+      
+      const listItem = document.createElement('li');
+      listItem.className = 'session-item';
+      listItem.innerHTML = `
+        <div>
+          <strong>${session.subject}</strong> 
+          (${formatTime(session.startTime)} - ${formatTime(session.endTime)})
+          <br>
+          <small>Days: ${session.days.map(day => getFullDayName(day)).join(', ')}</small>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="priority-badge" style="background: ${getPriorityColor(session.priority)}">${session.priority}</span>
+          <button class="btn-delete" data-id="${session.id}">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      `;
+      
+      sessionList.appendChild(listItem);
+      
+      // Add delete functionality
+      listItem.querySelector('.btn-delete').addEventListener('click', function() {
+        const sessionId = parseInt(this.getAttribute('data-id'));
+        studySessions = studySessions.filter(s => s.id !== sessionId);
+        saveSessions();
+        updateTimetableGrid();
+        updateStudySummary();
+        listItem.remove();
+        
+        if (studySessions.length === 0) {
+          sessionList.innerHTML = '<li class="no-sessions">No study sessions added yet. Use the form above to create your schedule.</li>';
+        }
+      });
+    }
+    
+    // Update the timetable grid
+    function updateTimetableGrid() {
+      // Clear all slots
+      document.querySelectorAll('.day-column').forEach(col => {
+        col.innerHTML = '';
+      });
+      
+      // Add sessions to grid
+      studySessions.forEach(session => {
+        session.days.forEach(day => {
+          for (let hour = session.startTime; hour < session.endTime; hour++) {
+            const slot = document.getElementById(`${day}-${hour}`);
+            if (slot) {
+              const sessionElement = document.createElement('div');
+              sessionElement.className = 'study-session';
+              sessionElement.textContent = session.subject;
+              sessionElement.style.backgroundColor = getPriorityColor(session.priority);
+              slot.appendChild(sessionElement);
+            }
+          }
+        });
+      });
+    }
+    
+    // Update study summary
+    function updateStudySummary() {
+      const totalHours = studySessions.reduce((total, session) => {
+        return total + (session.endTime - session.startTime) * session.days.length;
+      }, 0);
+      
+      const totalSessions = studySessions.length;
+      const uniqueSubjects = new Set(studySessions.map(session => session.subject)).size;
+      
+      document.getElementById('totalHours').textContent = `${totalHours} hrs`;
+      document.getElementById('totalSessions').textContent = totalSessions;
+      document.getElementById('totalSubjects').textContent = uniqueSubjects;
+    }
+    
+    // Helper functions
+    function formatTime(hour) {
+      if (hour < 12) {
+        return `${hour}:00 AM`;
+      } else if (hour === 12) {
+        return '12:00 PM';
+      } else {
+        return `${hour - 12}:00 PM`;
+      }
+    }
+    
+    function getFullDayName(shortName) {
+      const days = {
+        'mon': 'Monday',
+        'tue': 'Tuesday',
+        'wed': 'Wednesday',
+        'thu': 'Thursday',
+        'fri': 'Friday',
+        'sat': 'Saturday',
+        'sun': 'Sunday'
+      };
+      return days[shortName];
+    }
+    
+    function getPriorityColor(priority) {
+      const colors = {
+        'low': '#6ab04c',
+        'medium': '#f9ca24',
+        'high': '#eb4d4b'
+      };
+      return colors[priority] || '#f9ca24';
+    }
+    
+    function saveSessions() {
+      localStorage.setItem('studySessions', JSON.stringify(studySessions));
+    }
+  }
+
+  // Animation on scroll functionality
+  function initAnimations() {
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    
+    animatedElements.forEach(element => {
+      observer.observe(element);
+    });
+    
+    // Animate stats counting
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const options = {
+      threshold: 0.5
+    };
+    
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateValue(entry.target, 0, parseInt(entry.target.textContent), 1500);
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, options);
+    
+    statNumbers.forEach(stat => {
+      statsObserver.observe(stat);
+    });
+    
+    function animateValue(obj, start, end, duration) {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = Math.floor(progress * (end - start) + start) + (obj.id === 'successCount' ? '%' : '+');
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+  }
+</script>
+</body>
+</html>
